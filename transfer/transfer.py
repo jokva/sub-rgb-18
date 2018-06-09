@@ -1,5 +1,3 @@
-import numpy as np
-
 def transfer(rgb, xl =1):
 
     """
@@ -13,6 +11,7 @@ def transfer(rgb, xl =1):
     :param rgb: np.ndarray with columns defining rgb, which should add up to one
     :param xl: the length of the lower axis
     :return xy: np.ndarray of xy coordinates in 2 columns (n,2)
+    :return rgb_display: np.ndarray of rgb values in 3 columns (n,3)
     """
 
     rgb = np.asarray(rgb)
@@ -35,8 +34,14 @@ def transfer(rgb, xl =1):
     # y-coordinate (towards green)
     y = trih*rgb[:,1]
 
-    x = rgb[:,1]/2 - .5
+    x = .5*(rgb[:,1] + xl*rgb[:,2]/.5 -1)
 
-    xy = np.vstack([x,y])
+    xy = np.vstack([x,y]).T
 
-    return xy
+    hsv = rgb_to_hsv(rgb)
+    hsv[:,2] =1
+    rgb_display = hsv_to_rgb(hsv)
+
+
+    return xy, rgb_display
+
