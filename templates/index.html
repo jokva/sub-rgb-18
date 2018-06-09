@@ -1,54 +1,138 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>  </body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
 
+    <style>
+        body {
+           /* margin: 0; */
+           font-family: Roboto,Arial,sans-serif;
+           font-weight: 400;
+           line-height: 1.5;
+           color: #ffffff;
+           text-align: left;
+           background-color: #3e4759;
+        }
+
+        .jumbotron{
+           background-color: #242933;
+           padding: 2rem 1rem;
+        }
+
+        .thumbnail {
+           padding:15px
+        }
+
+
+    </style>
+
+
+    <script language="JavaScript">
+        function point_it(event){
+            var width = document.getElementById("image_result").width;
+            var height = document.getElementById("image_result").height;
+            var pos_x = event.offsetX;
+            var pos_y = event.offsetY;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "http://127.0.0.1:5000/API?x="+pos_x+"&y="+pos_y+"&width="+width+"&height="+height, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            xhttp.onreadystatechange = function () {
+                if(xhttp.readyState === 4 && xhttp.status === 200) {
+                    var answer = JSON.parse(xhttp.responseText);
+
+                    $('#red').html(parseFloat(answer.red).toFixed(2));
+                    $('#blue').html(parseFloat(answer.blue).toFixed(2));
+                    $('#green').html(parseFloat(answer.green).toFixed(2));
+                    $('#result').html(parseFloat(answer.value).toFixed(2));
+                }
+            };
+
+            xhttp.send();
+        }
+
+    </script>
 
     <!-- Page title -->
-    <title>Hello, world!</title>
-  </head>
-  <body>
+    <title>Super cool correlation tool with RGB</title>
+</head>
+<body>
 
-    <!-- Content inside Bootstrap class container -->
+<div class="jumbotron">
     <div class="container">
-        <div class="row">
-            <div class="col-4 text-center">
-                <img src={{ content.image1 }} style="width:100%"/>
-                <p>This is some text</p>
+        <h2 class="display-4">Super cool correlation tool with RGB</h2>
+    </div>
+</div>
+
+<!-- Content inside Bootstrap class container -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+
+            <div class="row thumbnail">
+                <p>Red channel</p>
+                <img src="{{ content.image1 }}" style="width:100%"/>
             </div>
-            <div class="col-4 text-center">
-                <img src={{ content.image2 }} style="width:100%"/>
-                <p>This is some text</p>
+            <div class="row thumbnail">
+                <p>Green channel</p>
+                <img src="{{ content.image2 }}" style="width:100%"/>
             </div>
-            <div class="col-4 text-center">
-                <img src={{ content.image3 }} style="width:100%"/>
-                <p>This is some text</p>
+            <div class="row thumbnail">
+                <p>Blue channel</p>
+                <img src="{{ content.image3 }}" style="width:100%"/>
             </div>
+            <!--</div>-->
         </div>
-        <div>
+        <div class="col-9">
             <div class="row">
-                <div class="col-12 text-center">
-                    <img src={{ content.result }} style="width:100%"/>
-                    <p>This is some text</p>
-                </div>
-             </div>
-        </div>
-        <div>
+                Correlation image
+            </div>
+            <!--<div class="container-fluid">-->
             <div class="row">
-                <div class="col-6 text-center">
-                    <img src={{ content.triangle }} style="width:100%"/>
-                    <p>This is some text</p>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12">
+                            <img id="image_result" onclick="point_it(event)" src="{{ content.result }}" style="width:100%"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <p>Value of red channel <span id="red"></span></p>
+                        </div>
+                        <div class="col-3">
+                            <p>Value of green channel <span id="green"></span></p>
+                        </div>
+                        <div class="col-3">
+                            <p>Value of blue channel <span id="blue"></span></p>
+                        </div>
+                        <!--<div class="col-3">-->
+                            <!--<p>Value of result channel <span id="result"></span></p>-->
+                        <!--</div>-->
+                    </div>
                 </div>
-             </div>
+                <div class="col-3">
+                    <img src="{{ content.ternary }}" style="width:100%"/>
+                </div>
+            </div>
+            <!--</div>-->
         </div>
-    </div> <!-- /.container -->
+    </div>
+</div>
 
 </html>
