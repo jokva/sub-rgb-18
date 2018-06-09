@@ -43,39 +43,3 @@ def computeProportion3Arrays(array1, array2, array3):
         globallyNormalized3rdTable[i] = array3[i] / norm
 
     return globallyNormalized1stTable, globallyNormalized2ndTable, globallyNormalized3rdTable
-
-
-
-# length = 2
-# firstTable = [1, 2.0]
-# secondTable = [3, 5.0]
-# thirdTable = [0, 2.0]
-# nFirstTable = np.zeros(length)
-# for j in range(0, length):
-#     if (max(firstTable)-min(firstTable))== 0:
-#         continue
-#     nFirstTable[j] = (firstTable[j]-min(firstTable))/(max(firstTable)-min(firstTable))
-#
-# nSecondTable = np.zeros(length)
-# for j in range(0, length):
-#    nSecondTable[j] = (secondTable[j]-min(secondTable))/(max(secondTable)-min(secondTable))
-#
-# nThirdTable = np.zeros(length)
-# for j in range(0, length):
-#    nThirdTable[j] = (thirdTable[j]-min(thirdTable))/(max(thirdTable)-min(thirdTable))
-#
-# #compute for each index of the 3 arrays the normalized corresponding vector of length 3, store it in 3 arrays
-# globallyNormalized1stTable = np.zeros(length)
-# globallyNormalized2ndTable = np.zeros(length)
-# globallyNormalized3rdTable = np.zeros(length)
-#
-# for i in range(0, length):
-#    norm = (nFirstTable[i]+nSecondTable[i]+nThirdTable[i])
-#    if norm == 0:
-#        globallyNormalized1stTable[i] = 1/3.0
-#        globallyNormalized2ndTable[i] = 1/3.0
-#        globallyNormalized3rdTable[i] = 1/3.0
-#        continue
-#    globallyNormalized1stTable[i] = nFirstTable[i]/norm
-#    globallyNormalized2ndTable[i] = nSecondTable[i]/norm
-#    globallyNormalized3rdTable[i] = nThirdTable[i]/norm
