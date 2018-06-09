@@ -3,7 +3,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import xarray as xr
 import numpy as np
-import transfer
+import rgblend
 
 
 app = Flask(__name__)
@@ -11,28 +11,41 @@ app = Flask(__name__)
 
 @app.route('/')
 def index_page():
-    image1 = import_image('test_data/horizon1.nc', 'static/horizon1.png')
-    image2 = import_image('test_data/horizon2.nc', 'static/horizon2.png')
-    image3 = import_image('test_data/horizon3.nc', 'static/horizon3.png')
 
+    data1 = xr.open_dataarray('test_data/horizon1.nc').values
+    data2 = xr.open_dataarray('test_data/horizon2.nc').values
+    data3 = xr.open_dataarray('test_data/horizon3.nc').values
 
+    image1 = create_image(data1, 'static/horizon1.png')
+    image2 = create_image(data2, 'static/horizon2.png')
+    image3 = create_image(data3, 'static/horizon3.png')
 
-    # rgb = transfer.transfer()
+    prop = rgblend.normalize3arrays(data1.ravel(), data2.ravel(), data3.ravel())
+
+    xy, rgbd = rgblend.transfer(prop)
+
+    #rgbd = np.random.randn(data1.shape[0] * data1.shape[1], 3)
 
     # convert values to 0 - 255 int8 format
-    # im = Image.new("RGB", rgb.scale)
-    # im.putdata(rgb)
-    # im.save("static/result.png")
+    rgbi = (rgbd * 255).astype(int)
+    rgbi = [tuple(c) for c in rgbi]
 
-    imageresult = 'image2' #TODO
+    imageresult = 'static/result.png'
+    img = Image.new('RGB', data1.shape[::-1])
+    img.putdata(rgbi)
+    img.save(imageresult)
+
+    triangle = 'static/triangle.png'
+    fig = plt.figure()
+    plt.scatter(xy[:, 0], xy[:, 1], c=rgbd)
+    fig.savefig('static/triangle.png')
 
 
-    dictionary = {'image1': image1,'image2': image2,'image3': image3,'result': imageresult}
+    dictionary = {'image1': image1,'image2': image2,'image3': image3,'result': '/' + imageresult, 'triangle': '/' + triangle}
     return render_template('index.html', content=dictionary)
 
 
-def import_image(file, name):
-    data = xr.open_dataarray(file).values
+def create_image(data, name):
     dim = data.shape[::-1]
     f = data.flatten()
     array = ((f - np.min(f)) / (np.max(f) - np.min(f)) * 255).astype(int)

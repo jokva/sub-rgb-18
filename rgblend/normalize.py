@@ -15,14 +15,11 @@ def normalize3arrays(array1, array2, array3):
     narray3 = normalizeArray2Range(array3)
     return computeProportion3Arrays(narray1, narray2, narray3)
 
+
 # compute the normalized version of each array
 def normalizeArray2Range(array):
-    normalizedArray = np.zeros(len(array))
-    for j in range(0, len(array)):
-        if (max(array) - min(array)) == 0:
-            continue
-        normalizedArray[j] = (array[j] - min(array)) / (max(array) - min(array))
-    return normalizedArray
+    return (array - np.min(array)) / (np.max(array) - np.min(array))
+
 
 def computeProportion3Arrays(array1, array2, array3):
 
@@ -37,9 +34,9 @@ def computeProportion3Arrays(array1, array2, array3):
             globallyNormalized1stTable[i] = 1 / 3.0
             globallyNormalized2ndTable[i] = 1 / 3.0
             globallyNormalized3rdTable[i] = 1 / 3.0
-            continue
-        globallyNormalized1stTable[i] = array1[i] / norm
-        globallyNormalized2ndTable[i] = array2[i] / norm
-        globallyNormalized3rdTable[i] = array3[i] / norm
+        else:
+            globallyNormalized1stTable[i] = array1[i] / norm
+            globallyNormalized2ndTable[i] = array2[i] / norm
+            globallyNormalized3rdTable[i] = array3[i] / norm
 
     return globallyNormalized1stTable, globallyNormalized2ndTable, globallyNormalized3rdTable
