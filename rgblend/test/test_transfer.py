@@ -1,24 +1,24 @@
 import pytest
-import rgblend.transfer as trans
+from rgblend import transfer
 import numpy as np
 
 def test_normalized_sum():
-    random_rgb = np.random.randn(30,3)
+    random_rgb = [np.random.randn(30) for _ in range(3)]
 
     with pytest.raises(ValueError):
-        trans.transfer(random_rgb)
+        transfer(random_rgb)
 
 def test_dimensions():
-    dim3 = np.random.randn(30,2,3)
+    dims = [np.random.randn(30) for _ in range(4)]
 
     with pytest.raises(ValueError):
-        trans.transfer(dim3)
+        transfer(dims)
 
     # tests squeezing as well
-    col2 = np.random.randn(30,2,1)
+    col2 = [np.random.randn(30,1) for _ in range(2)]
 
     with pytest.raises(ValueError):
-        trans.transfer(col2)
+        transfer(col2)
 
 def test_within_triangle():
     r, g, b = np.meshgrid(np.linspace(0.1, 1, 10),
@@ -26,10 +26,13 @@ def test_within_triangle():
                           np.linspace(0.1, 1, 10))
     rgbun = np.vstack([c.ravel() for c in [r, g, b]]).T
     rgbun = rgbun[~(np.sum(rgbun, axis=1) < 1e-9), :]
-    rgbn = (rgbun.T / np.sum(rgbun, axis=1)).T
+    rgbn = (rgbun.T / np.sum(rgbun, axis=1))
+
+    rgbn = [c for c in rgbn]
+
 
     xl = 1
-    xy, rgbd =trans.transfer(rgbn, xl=xl)
+    xy, rgbd =transfer(rgbn, xl=xl)
 
     assert np.all(0 <= xy[:,1])
     assert np.all(xy[:, 1] <= 1)

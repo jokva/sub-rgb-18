@@ -5,10 +5,10 @@ from matplotlib.colors import rgb_to_hsv, hsv_to_rgb
 def transfer(rgb, xl =1):
 
     """
-    This function is called on a normalized rgb array
-    of n points and shape (n, 3).
+    This function is called on a 3 normalized arrays representing r,g,b
+    of n points and shape (n,) in a list or tuple.
 
-    red will be in bottom left, green on top and blue on the
+    In the triangle red will be in bottom left, green on top and blue on the
     bottom right
 
 
@@ -17,10 +17,8 @@ def transfer(rgb, xl =1):
     :return xy: np.ndarray of xy coordinates in 2 columns (n,2)
     :return rgb_display: np.ndarray of rgb values in 3 columns (n,3)
     """
-
-    rgb = np.asarray(rgb)
-
-    rgb = np.squeeze(rgb)
+    print('hello')
+    rgb = np.asarray([np.squeeze(c) for c in rgb]).T
 
     if np.ndim(rgb) != 2:
         raise ValueError('Dimensions need to be 2')
