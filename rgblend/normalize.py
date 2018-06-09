@@ -18,10 +18,8 @@ def normalize3arrays(array1, array2, array3):
 # compute the normalized version of each array
 def normalizeArray2Range(array):
     normalizedArray = np.zeros(len(array))
-    for j in range(0, len(array)):
-        if (max(array) - min(array)) == 0:
-            continue
-        normalizedArray[j] = (array[j] - min(array)) / (max(array) - min(array))
+    r = np.max(array) - np.min(array)
+    normalizedArray = (array - np.min(array))/r
     return normalizedArray
 
 def computeProportion3Arrays(array1, array2, array3):
