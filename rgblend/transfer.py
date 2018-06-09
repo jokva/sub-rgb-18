@@ -31,12 +31,12 @@ def transfer(rgb, xl =1):
         raise ValueError('rbg rows do not add up to one')
 
     # height of triangle
-    trih = xl * np.sqrt(1.25)
+    trih = xl * np.sqrt(.75)
 
     # y-coordinate (towards green)
     y = trih*rgb[:,1]
 
-    x = .5*(rgb[:,1] + xl*rgb[:,2]/.5 -1)
+    x = .5*(rgb[:,1] + xl*rgb[:,2]*2 -1)
 
     xy = np.vstack([x,y]).T
 
@@ -46,4 +46,20 @@ def transfer(rgb, xl =1):
 
 
     return xy, rgb_display
+
+
+def xy2rgbd(xy, xl):
+
+    trih = xl * np.sqrt(.75)
+    g = xy[:,1]/trih
+    b = (xy[:,0]*2 -g +1)/xl/2
+    r = 1 - g - b
+
+    rgbd = np.vstack([r,g,b]).T
+
+    return rgbd
+
+
+
+
 
