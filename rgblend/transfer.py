@@ -55,8 +55,12 @@ def xy2rgbd(xy, xl):
     b = (xy[:,0]*2 -g +1)/xl/2
     r = 1 - g - b
 
-    rgbd = np.vstack([r,g,b]).T
+    rgb = np.vstack([r,g,b]).T
 
+    hsv = rgb_to_hsv(rgb)
+    hsv[:,2] =1
+    rgbd = hsv_to_rgb(hsv)
+    
     return rgbd
 
 
