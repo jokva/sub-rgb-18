@@ -32,7 +32,7 @@ def computeProportion3Arrays(array1, array2, array3):
     globallyNormalized3rdTable = np.zeros(len(array3))
 
     for i in range(0, len(array1)):
-        norm = (array1[i] + array2[i] + array2[i])
+        norm = (array1[i] + array2[i] + array3[i])
         if norm == 0:
             globallyNormalized1stTable[i] = 1 / 3.0
             globallyNormalized2ndTable[i] = 1 / 3.0
