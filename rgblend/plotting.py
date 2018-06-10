@@ -4,16 +4,6 @@ import rgblend
 from matplotlib.collections import PolyCollection
 import numpy as np
 
-
-
-import matplotlib.pyplot as plt
-import rgblend
-
-from matplotlib.collections import PolyCollection
-import numpy as np
-
-
-
 def tribar(figsize = [5,5], xl = 1, d =10, labels = ['Red', 'Green', 'Blue']):
     """
     Return figure object that contains a vectorized triangle
