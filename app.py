@@ -58,9 +58,8 @@ def import_netcdf(name):
 
 
 if __name__ == '__main__':
-
-    data = list(map(import_image, ("test_data/img1_lowres.jpg", "test_data/img2_lowres.jpg", "test_data/img3_lowres.jpg")))
-    data = list(map(import_image, ("test_data/img2_1_contrast_saturation_lowres.jpg", "test_data/img2_2_contrast_saturation_lowres.jpg", "test_data/img2_3_contrast_saturation_lowres.jpg")))
+    data = rgblend.import3images("test_data/img1_lowres.jpg", "test_data/img2_lowres.jpg", "test_data/img3_lowres.jpg")
+    data = rgblend.import3images("test_data/img2_1_contrast_saturation_lowres.jpg", "test_data/img2_2_contrast_saturation_lowres.jpg", "test_data/img2_3_contrast_saturation_lowres.jpg")
     # data = list(map(import_netcdf, ("test_data/horizon1.nc", "test_data/horizon2.nc", "test_data/horizon3.nc")))
 
     image1 = create_image(data[0], 'static/images/horizon1.png')
@@ -81,12 +80,17 @@ if __name__ == '__main__':
     img.save(imageresult)
 
     triangle = 'static/images/triangle.png'
-    fig = plt.figure()
-    plt.scatter(xy[:, 0], xy[:, 1], c=rgbd, zorder=10)
-    plt.plot([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='black', zorder=5)
-    plt.fill([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='w', zorder=0)
-    plt.axis('off')
+    # fig = plt.figure()
+    # plt.scatter(xy[:, 0], xy[:, 1], c=rgbd, zorder=10)
+    # plt.plot([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='black', zorder=5)
+    # plt.fill([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='w', zorder=0)
+    # plt.axis('off')
 
-    fig.savefig(triangle, bbox_inches='tight', transparent=True)
+    # fig.savefig(triangle, bbox_inches='tight', transparent=True)
+
+    plt.close()
+
+    fig = rgblend.tribar()
+    fig.savefig(triangle)
 
     app.run()

@@ -19,7 +19,7 @@ def import3images(fin1, fin2, fin3):
         return img
 
     def greyToArray(a):
-        arr = np.asarray(a).ravel()
+        arr = np.asarray(a)
         return arr
     
     arrs = []
