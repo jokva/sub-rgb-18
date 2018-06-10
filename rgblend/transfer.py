@@ -17,7 +17,7 @@ def transfer(rgb, xl =1):
     :return xy: np.ndarray of xy coordinates in 2 columns (n,2)
     :return rgb_display: np.ndarray of rgb values in 3 columns (n,3)
     """
-    print('hello')
+
     rgb = np.asarray([np.squeeze(c) for c in rgb]).T
 
     if np.ndim(rgb) != 2:

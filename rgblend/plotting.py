@@ -6,9 +6,17 @@ import numpy as np
 
 
 
-def tribar(figsize = [5,5], xl = 1):
+def tribar(figsize = [5,5], xl = 1, d =10):
+    """
+    Return figure object that contains a vectorized triangle
 
-    tris, xyc = rgblend.triangles(1, 6)
+    :param figsize:
+    :param xl: length of triangle side
+    :param d: number of discretizations along triangle side
+    :return: figure object
+    """
+
+    tris, xyc = rgblend.triangles(xl, d)
 
     fig = plt.figure(figsize=figsize)
 

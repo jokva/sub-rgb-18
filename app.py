@@ -32,7 +32,7 @@ def get_value(x, y, width, height, data):
     mx = round(data.shape[0] * x / width)
     my = round(data.shape[1] * y / height)
 
-    return data[mx, my]
+    return {'value': data[mx, my], 'min': np.amin(data), 'max': np.amax(data)}
 
 
 def create_image(data, name):
@@ -54,9 +54,9 @@ if __name__ == '__main__':
     data2 = xr.open_dataarray('test_data/horizon2.nc').values
     data3 = xr.open_dataarray('test_data/horizon3.nc').values
 
-    image1 = create_image(data1, 'static/horizon1.png')
-    image2 = create_image(data2, 'static/horizon2.png')
-    image3 = create_image(data3, 'static/horizon3.png')
+    image1 = create_image(data1, 'static/images/horizon1.png')
+    image2 = create_image(data2, 'static/images/horizon2.png')
+    image3 = create_image(data3, 'static/images/horizon3.png')
 
     prop = rgblend.normalize3arrays(data1.ravel(), data2.ravel(), data3.ravel())
 
@@ -66,15 +66,18 @@ if __name__ == '__main__':
     rgbi = (rgbd * 255).astype(int)
     rgbi = [tuple(c) for c in rgbi]
 
-    imageresult = 'static/result.png'
+    imageresult = 'static/images/result.png'
     img = Image.new('RGB', data1.shape[::-1])
     img.putdata(rgbi)
     img.save(imageresult)
 
-    triangle = 'static/triangle.png'
+    triangle = 'static/images/triangle.png'
     fig = plt.figure()
-    plt.plot([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], '-.'),
-    plt.scatter(xy[:, 0], xy[:, 1], c=rgbd)
-    fig.savefig('static/triangle.png')
+    plt.scatter(xy[:, 0], xy[:, 1], c=rgbd, zorder=10)
+    plt.plot([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='black', zorder=5)
+    plt.fill([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='w', zorder=0)
+    plt.axis('off')
+
+    fig.savefig(triangle, bbox_inches='tight', transparent=True)
 
     app.run()
