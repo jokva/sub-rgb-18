@@ -66,9 +66,13 @@ def rgblend_img(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     # Ideally check dimensions
     # ..,but for now NO TIME
 
-    fig, ax = plt.subplots(1, 2, figsize=figsize)
+    nm = np.shape(a1)
 
-    na = rgblend.normalize3arrays_numpy(a1, a2, a3)
+    fig, ax = plt.subplots(2, 3, figsize=figsize)
+
+    sa = [rgblend.normalize.normalizeArray2Range(a.ravel()) for a in [a1,a2,a3]]
+
+    na = rgblend.normalize3arrays_numpy(a1,a2,a3)
 
     xy, rgbd = rgblend.transfer(na)
 
@@ -77,12 +81,27 @@ def rgblend_img(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     for ci, c in enumerate(rgbd.T):
         img[:, :, ci] = np.reshape(c, nm)
 
-    plt.sca(ax[0])
+    plt.sca(ax[0,0])
     img = plt.imshow(img, aspect=aspect)
 
-    plt.sca(ax[1])
-    ax[1] = rgblend.tribar(ax=ax[1])
+    plt.sca(ax[0,1])
+    ax[0,1] = rgblend.tribar(ax=ax[0,1])
 
-    plt.plot(xy[:, 0], xy[:, 1], '.', alpha=0.1)
+    ax[0, 1].plot(xy[:, 0], xy[:, 1], 'k.', alpha=0.1)
+
+    plt.sca(ax[1, 0])
+    img = plt.imshow(np.reshape(sa[0], nm), aspect=aspect, cmap='Greys_r')
+
+    plt.sca(ax[1, 1])
+    img = plt.imshow(np.reshape(sa[1], nm), aspect=aspect, cmap='Greys_r')
+
+    plt.sca(ax[1, 2])
+    img = plt.imshow(np.reshape(sa[2], nm), aspect=aspect, cmap='Greys_r')
+
+    for loc in ['top', 'bottom', 'left', 'right']:
+        ax[0,2].spines[loc].set_visible(False)
+
+    ax[0, 2].set_xticks([])
+    ax[0, 2].set_yticks([])
 
     return fig

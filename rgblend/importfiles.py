@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-def import3images(fin1, fin2, fin3):
+def import3images(fin1, fin2, fin3, flip = False):
     """
     Function for importing three image files (Red Green Blue), then greyscaling them, then returning 1D arrays.
     :param fin1: String filename
@@ -20,6 +20,8 @@ def import3images(fin1, fin2, fin3):
 
     def greyToArray(a):
         arr = np.asarray(a)
+        if flip:
+            arr = 255-arr
         return arr
     
     arrs = []
