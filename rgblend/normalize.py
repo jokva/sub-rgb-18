@@ -1,5 +1,32 @@
 import numpy as np
 
+
+def normalize3arrays_numpy(array1, array2, array3):
+
+    '''
+    this methode assume that the 3 arrays have the same size.
+    :param array1:
+    :param array2:
+    :param array3:
+    :return: 3 arrays, one for each input after normalization to the range, and proportion computation regarding the three arrays.
+    '''
+
+    na1 = normalizeArray2Range(array1)
+    na2 = normalizeArray2Range(array2)
+    na3 = normalizeArray2Range(array3)
+    nasum = na1 + na2 + na3
+    n0 = nasum != 0
+    na1[n0] = na1[n0]/nasum[n0]
+    na2[n0] = na2[n0] / nasum[n0]
+    na3[n0] = na3[n0] / nasum[n0]
+    na1[~n0] = 1/3
+    na2[~n0] = 1/3
+    na3[~n0] = 1/3
+
+
+    return na1, na2, na3
+
+
 def normalize3arrays(array1, array2, array3):
 
     '''
