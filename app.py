@@ -50,9 +50,16 @@ def create_image(data, name):
 
 
 if __name__ == '__main__':
-    data1 = xr.open_dataarray('test_data/horizon1.nc').values
-    data2 = xr.open_dataarray('test_data/horizon2.nc').values
-    data3 = xr.open_dataarray('test_data/horizon3.nc').values
+    data1 = Image.open("test_data/img1_lowres.jpg").convert('L')
+    data1 = np.array(data1) / 255
+    data2 = Image.open("test_data/img2_lowres.jpg").convert('L')
+    data2 = np.array(data2) / 255
+    data3 = Image.open("test_data/img3_lowres.jpg").convert('L')
+    data3 = np.array(data3) / 255
+
+    # data1 = xr.open_dataarray('test_data/horizon1.nc').values
+    # data2 = xr.open_dataarray('test_data/horizon2.nc').values
+    # data3 = xr.open_dataarray('test_data/horizon3.nc').values
 
     image1 = create_image(data1, 'static/images/horizon1.png')
     image2 = create_image(data2, 'static/images/horizon2.png')
