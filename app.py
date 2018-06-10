@@ -73,6 +73,7 @@ if __name__ == '__main__':
 
     # data = list(map(import_netcdf, ("test_data/horizon1.nc", "test_data/horizon2.nc", "test_data/horizon3.nc")))
 
+    data = [rgblend.imgToGrey(di) for di in data]
     image1 = create_image(data[0], 'static/images/horizon1.png')
     image2 = create_image(data[1], 'static/images/horizon2.png')
     image3 = create_image(data[2], 'static/images/horizon3.png')
@@ -100,7 +101,7 @@ if __name__ == '__main__':
     fig.savefig(ternary, bbox_inches='tight', transparent=True)
 
     triangle = 'static/images/triangle.png'
-    fig = rgblend.tribar()
+    fig = rgblend.tribar(xy = xy)
     fig.savefig(triangle, bbox_inches='tight', transparent=True)
 
     app.run()

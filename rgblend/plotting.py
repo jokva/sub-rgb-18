@@ -8,7 +8,7 @@ from .importfiles import imgToGrey
 from matplotlib.collections import PolyCollection
 import numpy as np
 
-def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 'Blue']):
+def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 'Blue'], xy = None):
 
     """
     Return figure object that contains a vectorized triangle
@@ -58,6 +58,10 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     ax.set_xticks([])
     ax.set_yticks([])
     plt.gca().set_aspect('equal')
+
+    if xy is not None:
+        ax.plot(xy[:, 0], xy[:, 1], 'k.', alpha=0.1)
+
     if ret == 'figure':
         return fig
     else:
@@ -101,9 +105,9 @@ def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto', flip = False):
     plt.text(.2, .7, 'Blend', ha='left', va='top', fontsize=15, color='k')
 
     plt.sca(ax[0,1])
-    ax[0,1] = tribar(ax=ax[0,1])
+    ax[0,1] = tribar(ax=ax[0,1], xy=xy)
 
-    ax[0, 1].plot(xy[:, 0], xy[:, 1], 'k.', alpha=0.1)
+    #ax[0, 1].plot(xy[:, 0], xy[:, 1], 'k.', alpha=0.1)
 
     plt.sca(ax[1, 0])
     img = plt.imshow(a1, aspect=aspect, cmap='Greys_r')

@@ -23,13 +23,13 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
     <!-- Page title -->
-    <title>Super cool correlation tool with RGB</title>
+    <title>RGBlend</title>
 </head>
 <body>
 
 <div class="jumbotron">
     <div class="container">
-        <h2 class="display-4">RGB Blender</h2>
+        <h2 class="display-4">RGBlend</h2>
     </div>
 </div>
 
@@ -60,7 +60,7 @@
         </div>
         <div class="col-8">
             <div class="row">
-                <div class="col-9">
+                <div class="col-12">
                     <div class="row">
                         <div class="col-12">
                             <img class="image-border" id="image_result" onclick="point_it(event)" src="{{ content.result }}"
@@ -82,20 +82,17 @@
                         <!--</div>-->
                     </div>
                     <div class="row">
-                        <div class="col-6 offset-3 text-center">
+                        <div class="col-6 image-container">
+                            <img src="{{ content.triangle }}" class="image" style="width:100%"/>
+                        </div>
+                        <div class="col-6 text-center">
                             <div id="chart_div"></div>
                         </div>
+
                     </div>
 
                 </div>
-                <div class="col-3">
-                    <!--<div class="row image-container">-->
-                        <!--<img src="{{ content.ternary }}" class="image" style="width:100%"/>-->
-                    <!--</div>-->
-                    <div class="row image-container">
-                        <img src="{{ content.triangle }}" class="image" style="width:100%"/>
-                    </div>
-                </div>
+
             </div>
             <!--</div>-->
         </div>
