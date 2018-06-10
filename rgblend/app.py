@@ -1,6 +1,7 @@
 import argparse
 import matplotlib.pyplot as plt
 
+from .plotting import tribar, rgblend
 from .importfiles import import3images
 
 def img3():
@@ -11,6 +12,6 @@ def img3():
 
     args = parser.parse_args()
 
-    imgs = import3images(*args.images, flip = args.flip)
-    rgblend_img(*imgs)
+    imgs = import3images(*args.images)
+    rgblend(*imgs, flip=args.flip)
     plt.show()

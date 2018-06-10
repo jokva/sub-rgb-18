@@ -1,7 +1,18 @@
 import os
 import numpy as np
+import PIL.Image as image
 
-def import3images(fin1, fin2, fin3, flip = False):
+
+
+def imgToGrey(img, flip = False):
+    img = img.convert('L')
+    arr = np.asarray(img)
+    if flip:
+        arr = 255 - arr
+    return arr[::-1]
+
+
+def import3images(fin1, fin2, fin3):
     """
     Function for importing three image files (Red Green Blue), then greyscaling them, then returning 1D arrays.
     :param fin1: String filename
@@ -11,24 +22,18 @@ def import3images(fin1, fin2, fin3, flip = False):
     """
 
     fins = [fin1, fin2, fin3]
-  
-    def imgToGrey(fin):
-        import PIL.Image as image
+
+
+    def importfile(fin):
         if not os.path.isfile(fin): raise ValueError('File does not exist: %s' %fin)
-        img = image.open(fin).convert('L')
+        img = image.open(fin)
         return img
 
-    def greyToArray(a):
-        arr = np.asarray(a)
-        if flip:
-            arr = 255-arr
-        return arr[::-1]
-    
 
-    arrs = []
+
+    imgs = []
     for fin in [fin1, fin2, fin3]:
-        img = imgToGrey(fin)
-        arr = greyToArray(img)
-        arrs.append(arr)
+        img = importfile(fin)
+        imgs.append(img)
 
-    return arrs[0], arrs[1], arrs[2]
+    return imgs

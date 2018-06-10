@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 
-from .normalize import normalize3arrays_numpy, normalizeArray2Range
+from .normalize import normalize3arrays_numpy
 from .transfer import transfer, xy2rgbd
 from .triangles import triangles
+from .importfiles import imgToGrey
 
 from matplotlib.collections import PolyCollection
 import numpy as np
@@ -63,19 +64,30 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
         return ax
 
 
-def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
+def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto', flip = False):
+
+
+    ag1 = imgToGrey(a1,flip=flip)
+    ag2 = imgToGrey(a2,flip=flip)
+    ag3 = imgToGrey(a3,flip=flip)
+
+    a1 = np.asarray(a1)[::-1]
+    a2 = np.asarray(a2)[::-1]
+    a3 = np.asarray(a3)[::-1]
     nm = np.shape(a1)
 
     # Ideally check dimensions
     # ..,but for now NO TIME
 
-    nm = np.shape(a1)
+    nm = np.shape(ag1)
 
     fig, ax = plt.subplots(2, 3, figsize=figsize)
 
-    sa = [normalizeArray2Range(a.ravel()) for a in [a1,a2,a3]]
+    #sa = [normalizeArray2Range(a.ravel()) for a in [a1,a2,a3]]
 
-    na = normalize3arrays_numpy(a1,a2,a3)
+
+
+    na = normalize3arrays_numpy(ag1,ag2,ag3)
 
     xy, rgbd = transfer(na)
 
@@ -86,6 +98,7 @@ def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
 
     plt.sca(ax[0,0])
     img = plt.imshow(img, aspect=aspect)
+    plt.text(.2, .7, 'Blend', ha='left', va='top', fontsize=15, color='k')
 
     plt.sca(ax[0,1])
     ax[0,1] = tribar(ax=ax[0,1])
@@ -93,13 +106,16 @@ def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     ax[0, 1].plot(xy[:, 0], xy[:, 1], 'k.', alpha=0.1)
 
     plt.sca(ax[1, 0])
-    img = plt.imshow(np.reshape(sa[0], nm), aspect=aspect, cmap='Greys_r')
+    img = plt.imshow(a1, aspect=aspect, cmap='Greys_r')
+    plt.text(.2, .7, 'Red', ha='left', va='top', fontsize=15, color= 'w')
 
     plt.sca(ax[1, 1])
-    img = plt.imshow(np.reshape(sa[1], nm), aspect=aspect, cmap='Greys_r')
+    img = plt.imshow(a2, aspect=aspect, cmap='Greys_r')
+    plt.text(.2, .7, 'Green', ha='left', va='top', fontsize=15, color='w')
 
     plt.sca(ax[1, 2])
-    img = plt.imshow(np.reshape(sa[2], nm), aspect=aspect, cmap='Greys_r')
+    img = plt.imshow(a3, aspect=aspect, cmap='Greys_r')
+    plt.text(.2, .7, 'Blue', ha='left', va='top', fontsize=15, color='w')
 
     for loc in ['top', 'bottom', 'left', 'right']:
         ax[0,2].spines[loc].set_visible(False)
