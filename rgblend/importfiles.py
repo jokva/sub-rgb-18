@@ -2,6 +2,13 @@ import os
 import numpy as np
 
 def import3images(fin1, fin2, fin3):
+    """
+    Function for importing three image files (Red Green Blue), then greyscaling them, then returning 1D arrays.
+    :param fin1: String filename
+    :param fin2: String filename
+    :param fin3: String filename
+    :return arrs[0], arrs[1], arrs[2]: Array representation of input images 
+    """
 
     fins = [fin1, fin2, fin3]
   
