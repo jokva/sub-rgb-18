@@ -11,9 +11,11 @@ def normalize3arrays_numpy(array1, array2, array3):
     :return: 3 arrays, one for each input after normalization to the range, and proportion computation regarding the three arrays.
     '''
 
-    na1 = normalizeArray2Range(array1)
-    na2 = normalizeArray2Range(array2)
-    na3 = normalizeArray2Range(array3)
+
+
+    na1 = normalizeArray2Range(array1.ravel())
+    na2 = normalizeArray2Range(array2.ravel())
+    na3 = normalizeArray2Range(array3.ravel())
     nasum = na1 + na2 + na3
     n0 = nasum != 0
     na1[n0] = na1[n0]/nasum[n0]
