@@ -14,13 +14,15 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     :param d: number of discretizations along triangle side
     :return: figure object
     """
-
+    ret = 'axis'
     tris, xyc = rgblend.triangles(xl, d)
 
     if ax is None:
         fig = plt.figure(figsize=figsize)
 
-        ax = fig.add_axes([0, 0, 1, 1])
+        ax = fig.add_axes([.1, .1, .8, .8])
+        ret = 'figure'
+
 
     pc = PolyCollection(tris, closed=True)
 
@@ -52,11 +54,13 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     ax.set_xticks([])
     ax.set_yticks([])
     plt.gca().set_aspect('equal')
+    if ret == 'figure':
+        return fig
+    else:
+        return ax
 
-    return ax
 
-
-def rgblend_img(a1, a2, a3, figsize=[10, 3]):
+def rgblend_img(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     nm = np.shape(a1)
 
     # Ideally check dimensions
@@ -74,11 +78,11 @@ def rgblend_img(a1, a2, a3, figsize=[10, 3]):
         img[:, :, ci] = np.reshape(c, nm)
 
     plt.sca(ax[0])
-    img = plt.imshow(img)
+    img = plt.imshow(img, aspect=aspect)
 
     plt.sca(ax[1])
     ax[1] = rgblend.tribar(ax=ax[1])
 
-    plt.plot(xy[:, 0], xy[:, 1], '.', alpha=0.5)
+    plt.plot(xy[:, 0], xy[:, 1], '.', alpha=0.1)
 
     return fig
