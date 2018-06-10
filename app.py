@@ -48,6 +48,10 @@ def create_image(data, name):
     return '/' + name
 
 
+def import_image(name):
+    data = Image.open(name).convert('L')
+    return np.array(data) / 255
+
 
 if __name__ == '__main__':
     data1 = Image.open("test_data/img1_lowres.jpg").convert('L')
