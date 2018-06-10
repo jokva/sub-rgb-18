@@ -22,8 +22,9 @@ def import3images(fin1, fin2, fin3, flip = False):
         arr = np.asarray(a)
         if flip:
             arr = 255-arr
-        return arr
+        return arr[::-1]
     
+
     arrs = []
     for fin in [fin1, fin2, fin3]:
         img = imgToGrey(fin)
