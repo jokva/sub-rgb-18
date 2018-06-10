@@ -17,57 +17,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
             integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="/static/js/function.js"></script>
 
-    <style>
-        body {
-           /* margin: 0; */
-           font-family: Roboto,Arial,sans-serif;
-           font-weight: 400;
-           line-height: 1.5;
-           color: #ffffff;
-           text-align: left;
-           background-color: #3e4759;
-        }
-
-        .jumbotron{
-           background-color: #242933;
-           padding: 2rem 1rem;
-        }
-
-        .thumbnail {
-           padding:15px
-        }
-
-
-    </style>
-
-
-    <script language="JavaScript">
-        function point_it(event){
-            var width = document.getElementById("image_result").width;
-            var height = document.getElementById("image_result").height;
-            var pos_x = event.offsetX;
-            var pos_y = event.offsetY;
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "http://127.0.0.1:5000/API?x="+pos_x+"&y="+pos_y+"&width="+width+"&height="+height, true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-
-            xhttp.onreadystatechange = function () {
-                if(xhttp.readyState === 4 && xhttp.status === 200) {
-                    var answer = JSON.parse(xhttp.responseText);
-
-                    $('#red').html(parseFloat(answer.red).toFixed(2));
-                    $('#blue').html(parseFloat(answer.blue).toFixed(2));
-                    $('#green').html(parseFloat(answer.green).toFixed(2));
-                    $('#result').html(parseFloat(answer.value).toFixed(2));
-                }
-            };
-
-            xhttp.send();
-        }
-
-    </script>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
     <!-- Page title -->
     <title>Super cool correlation tool with RGB</title>
@@ -108,23 +61,30 @@
                 <div class="col-9">
                     <div class="row">
                         <div class="col-12">
-                            <img id="image_result" onclick="point_it(event)" src="{{ content.result }}" style="width:100%"/>
+                            <img id="image_result" onclick="point_it(event)" src="{{ content.result }}"
+                                 style="width:100%"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-4">
                             <p>Value of red channel <span id="red"></span></p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <p>Value of green channel <span id="green"></span></p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <p>Value of blue channel <span id="blue"></span></p>
                         </div>
                         <!--<div class="col-3">-->
-                            <!--<p>Value of result channel <span id="result"></span></p>-->
+                        <!--<p>Value of result channel <span id="result"></span></p>-->
                         <!--</div>-->
                     </div>
+                    <div class="row">
+                        <div class="col-6 offset-3 text-center">
+                            <div id="chart_div"></div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-3">
                     <img src="{{ content.ternary }}" style="width:100%"/>
@@ -134,5 +94,6 @@
         </div>
     </div>
 </div>
+
 
 </html>
