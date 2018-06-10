@@ -61,8 +61,16 @@ def import_netcdf(name):
 
 
 if __name__ == '__main__':
-    data = rgblend.import3images("test_data/img1_lowres.jpg", "test_data/img2_lowres.jpg", "test_data/img3_lowres.jpg")
-    data = rgblend.import3images("test_data/img2_1_contrast_saturation_lowres.jpg", "test_data/img2_2_contrast_saturation_lowres.jpg", "test_data/img2_3_contrast_saturation_lowres.jpg")
+    # data = rgblend.import3images("test_data/img1_lowres.jpg",
+    #                              "test_data/img2_lowres.jpg",
+    #                              "test_data/img3_lowres.jpg")
+    # data = rgblend.import3images("test_data/img2_1_contrast_saturation_lowres.jpg",
+    #                              "test_data/img2_2_contrast_saturation_lowres.jpg",
+    #                              "test_data/img2_3_contrast_saturation_lowres.jpg")
+    data = rgblend.import3images("test_data/img3_1_lowres.jpg",
+                                 "test_data/img3_2_lowres.jpg",
+                                 "test_data/img3_3_lowres.jpg")
+
     # data = list(map(import_netcdf, ("test_data/horizon1.nc", "test_data/horizon2.nc", "test_data/horizon3.nc")))
 
     image1 = create_image(data[0], 'static/images/horizon1.png')

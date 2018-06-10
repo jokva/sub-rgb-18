@@ -1,11 +1,6 @@
-import sys
 import argparse
-
-import cProfile
-
 import matplotlib.pyplot as plt
 
-from .plotting import tribar, rgblend_img
 from .importfiles import import3images
 
 def img3():
