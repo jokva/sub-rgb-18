@@ -15,8 +15,8 @@ google.charts.load('current', {packages: ['corechart', 'bar']});
             hAxis: {
               title: 'Channel',
               viewWindow: {
-                min: [0, 30, 0],
-                max: [3, 30, 0]
+                min: 0,
+                max: 1
               }
             },
             vAxis: {
@@ -65,7 +65,14 @@ google.charts.load('current', {packages: ['corechart', 'bar']});
                     g = (answer.green.value - answer.green.min) / (answer.green.max - answer.green.min);;
                     b = (answer.blue.value - answer.blue.min) / (answer.blue.max - answer.blue.min);;
 
-                    drawAxisTickColors(r, g, b);
+                    sum = r + g + b;
+
+                    if (sum === 0){
+                        drawAxisTickColors(1/3, 1/3, 1/3);
+                    }
+                    else {
+                        drawAxisTickColors(r / sum * 255, g /sum * 255, b /sum * 255);
+                    }
                 }
             };
 

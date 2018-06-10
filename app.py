@@ -29,10 +29,10 @@ def api():
 
 
 def get_value(x, y, width, height, value):
-    mx = round(value.shape[0] * x / width)
-    my = round(value.shape[1] * y / height)
+    mx = round(value.shape[1] * x / width)
+    my = round(value.shape[0] * y / height)
 
-    return {'value': value[mx, my], 'min': np.amin(value), 'max': np.amax(value)}
+    return {'value': value[my, mx], 'min': np.amin(value), 'max': np.amax(value)}
 
 
 def create_image(value, name):
