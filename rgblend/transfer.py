@@ -49,15 +49,39 @@ def transfer(rgb, xl =1):
 
 
 def xy2rgbd(xy, xl):
+    """
+    This function returns rgb colors in three columns for the display of maps
+
+    :param xy: xy coordinates in triangle
+    :param xl: length of triangle side
+    :return:
+    """
 
     trih = xl * np.sqrt(.75)
     g = xy[:,1]/trih
     b = (xy[:,0]*2 -g +1)/xl/2
     r = 1 - g - b
 
-    rgbd = np.vstack([r,g,b]).T
+    rgb = np.vstack([r,g,b]).T
+
+    hsv = rgb_to_hsv(rgb)
+    hsv[:,2] =1
+    rgbd = hsv_to_rgb(hsv)
 
     return rgbd
+
+def xy2rgba(xy, xl, a=1):
+    """
+    This function returns rgba colors in four columns for the display of triangles.
+    "a" in this sense is the alpha parameter and by default set to 1
+    :param a: alpha parameter
+    :param xy:
+    :param xl:
+    :return:
+    """
+    rgba = np.vstack([xy2rgbd(xy, xl).T, a*np.ones(len(xy))]).T
+    return rgba
+
 
 
 
