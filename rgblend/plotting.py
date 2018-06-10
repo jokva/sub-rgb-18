@@ -14,13 +14,15 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     :param d: number of discretizations along triangle side
     :return: figure object
     """
-
+    ret = 'axis'
     tris, xyc = rgblend.triangles(xl, d)
 
     if ax is None:
         fig = plt.figure(figsize=figsize)
 
         ax = fig.add_axes([.1, .1, .8, .8])
+        ret = 'figure'
+
 
     pc = PolyCollection(tris, closed=True)
 
@@ -52,7 +54,7 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     ax.set_xticks([])
     ax.set_yticks([])
     plt.gca().set_aspect('equal')
-    if ax is None:
+    if ret == 'figure':
         return fig
     else:
         return ax
