@@ -29,7 +29,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h2 class="display-4">Super cool correlation tool with RGB</h2>
+        <h2 class="display-4">RGB Blender</h2>
     </div>
 </div>
 
@@ -41,33 +41,29 @@
             <div class="row thumbnail">
                 <p>Red channel</p>
                 <!--<div class="image-container">-->
-                    <img src="{{ content.image1 }}" style="width:100%"/>
+                    <img src="{{ content.image1 }}" class="image-border" style="width:100%"/>
                 <!--</div>-->
             </div>
             <div class="row thumbnail">
                 <p>Green channel</p>
                 <!--<div class="image-container">-->
-                    <img src="{{ content.image2 }}" style="width:100%"/>
+                    <img src="{{ content.image2 }}" class="image-border" style="width:100%"/>
                 <!--</div>-->
             </div>
             <div class="row thumbnail">
                 <p>Blue channel</p>
                 <!--<div class="image-container">-->
-                    <img src="{{ content.image3 }}" style="width:100%"/>
+                    <img src="{{ content.image3 }}" class="image-border" style="width:100%"/>
                 <!--</div>-->
             </div>
             <!--</div>-->
         </div>
         <div class="col-9">
             <div class="row">
-                Correlation image
-            </div>
-            <!--<div class="container-fluid">-->
-            <div class="row">
                 <div class="col-9">
                     <div class="row">
                         <div class="col-12">
-                            <img id="image_result" onclick="point_it(event)" src="{{ content.result }}"
+                            <img class="image-border" id="image_result" onclick="point_it(event)" src="{{ content.result }}"
                                  style="width:100%"/>
                         </div>
                     </div>

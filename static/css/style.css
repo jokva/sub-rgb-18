@@ -3,14 +3,14 @@ body {
    font-family: Roboto,Arial,sans-serif;
    font-weight: 400;
    line-height: 1.5;
-   color: #ffffff;
    text-align: left;
-   background-color: #3e4759;
 }
 
 .jumbotron{
    background-color: #242933;
+   color: white;
    padding: 2rem 1rem;
+   text-align: center;
 }
 
 .thumbnail {
@@ -21,6 +21,10 @@ body {
     width: 100%;
     padding-top: 100%; /* 1:1 Aspect Ratio */
     position: relative; /* If you want text inside of it */
+}
+
+.image-border {
+    border:line 1px black
 }
 
 /* If you want text inside of the container */
