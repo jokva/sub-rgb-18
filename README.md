@@ -1,1 +1,1 @@
-Quick and dirty work done on the Subsurface Hackathon 2018
+The RGBlend team presents its correlation tool, based on a new super cool python function to blend images and display its ternary diagram.
