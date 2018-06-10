@@ -9,7 +9,7 @@ def imgToGrey(img, flip = False):
     arr = np.asarray(img)
     if flip:
         arr = 255 - arr
-    return arr[::-1]
+    return arr[::-1][:,::-1]
 
 
 def import3images(fin1, fin2, fin3):
@@ -27,6 +27,7 @@ def import3images(fin1, fin2, fin3):
     def importfile(fin):
         if not os.path.isfile(fin): raise ValueError('File does not exist: %s' %fin)
         img = image.open(fin)
+        img.rotate(180)
         return img
 
 

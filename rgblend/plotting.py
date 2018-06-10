@@ -71,9 +71,9 @@ def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto', flip = False):
     ag2 = imgToGrey(a2,flip=flip)
     ag3 = imgToGrey(a3,flip=flip)
 
-    a1 = np.asarray(a1)[::-1]
-    a2 = np.asarray(a2)[::-1]
-    a3 = np.asarray(a3)[::-1]
+    a1 = np.asarray(a1)[::-1][:,::-1]
+    a2 = np.asarray(a2)[::-1][:,::-1]
+    a3 = np.asarray(a3)[::-1][:,::-1]
     nm = np.shape(a1)
 
     # Ideally check dimensions
