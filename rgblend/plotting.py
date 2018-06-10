@@ -64,7 +64,7 @@ def rgblend_img(a1, a2, a3, figsize=[10, 3]):
 
     fig, ax = plt.subplots(1, 2, figsize=figsize)
 
-    na = r.gblendnormalize3arrays_numpy(a1, a2, a3)
+    na = rgblend.normalize3arrays_numpy(a1, a2, a3)
 
     xy, rgbd = rgblend.transfer(na)
 
