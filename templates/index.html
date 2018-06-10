@@ -40,15 +40,21 @@
 
             <div class="row thumbnail">
                 <p>Red channel</p>
-                <img src="{{ content.image1 }}" style="width:100%"/>
+                <!--<div class="image-container">-->
+                    <img src="{{ content.image1 }}" style="width:100%"/>
+                <!--</div>-->
             </div>
             <div class="row thumbnail">
                 <p>Green channel</p>
-                <img src="{{ content.image2 }}" style="width:100%"/>
+                <!--<div class="image-container">-->
+                    <img src="{{ content.image2 }}" style="width:100%"/>
+                <!--</div>-->
             </div>
             <div class="row thumbnail">
                 <p>Blue channel</p>
-                <img src="{{ content.image3 }}" style="width:100%"/>
+                <!--<div class="image-container">-->
+                    <img src="{{ content.image3 }}" style="width:100%"/>
+                <!--</div>-->
             </div>
             <!--</div>-->
         </div>
@@ -87,7 +93,12 @@
 
                 </div>
                 <div class="col-3">
-                    <img src="{{ content.ternary }}" style="width:100%"/>
+                    <div class="row image-container">
+                        <img src="{{ content.ternary }}" class="image" style="width:100%"/>
+                    </div>
+                    <div class="row image-container">
+                        <img src="{{ content.triangle }}" class="image" style="width:100%"/>
+                    </div>
                 </div>
             </div>
             <!--</div>-->

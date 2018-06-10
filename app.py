@@ -11,7 +11,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index_page():
-    dictionary = {'image1': image1,'image2': image2,'image3': image3,'result': '/' + imageresult, 'ternary': '/' + triangle}
+    dictionary = {'image1': image1,'image2': image2,'image3': image3,'result': '/' + imageresult,
+                  'ternary': '/' + ternary, 'triangle': '/' + triangle}
     return render_template('index.html', content=dictionary)
 
 
@@ -24,7 +25,9 @@ def api():
         width = int(request.args.get('width'))
         height = int(request.args.get('height'))
 
-        return jsonify({'red': get_value(x, y, width, height, data[0]), 'green': get_value(x, y, width, height, data[1]), 'blue': get_value(x, y, width, height, data[2])})
+        return jsonify({'red': get_value(x, y, width, height, data[0]),
+                        'green': get_value(x, y, width, height, data[1]),
+                        'blue': get_value(x, y, width, height, data[2])})
     return jsonify({})
 
 
@@ -32,7 +35,7 @@ def get_value(x, y, width, height, value):
     mx = round(value.shape[1] * x / width)
     my = round(value.shape[0] * y / height)
 
-    return {'value': value[my, mx], 'min': np.amin(value), 'max': np.amax(value)}
+    return {'value': float(value[my, mx]), 'min': float(np.amin(value)), 'max': float(np.amax(value))}
 
 
 def create_image(value, name):
@@ -79,18 +82,17 @@ if __name__ == '__main__':
     img.putdata(rgbi)
     img.save(imageresult)
 
+    ternary = 'static/images/ternary.png'
+    fig = plt.figure()
+    plt.scatter(xy[:, 0], xy[:, 1], c=rgbd, zorder=10)
+    plt.plot([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='black', zorder=5)
+    plt.fill([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='w', zorder=0)
+    plt.axis('off')
+
+    fig.savefig(ternary, bbox_inches='tight', transparent=True)
+
     triangle = 'static/images/triangle.png'
-    # fig = plt.figure()
-    # plt.scatter(xy[:, 0], xy[:, 1], c=rgbd, zorder=10)
-    # plt.plot([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='black', zorder=5)
-    # plt.fill([-.5, 0.5, 0, -.5], [0, 0, np.sqrt(1.25), 0], c='w', zorder=0)
-    # plt.axis('off')
-
-    # fig.savefig(triangle, bbox_inches='tight', transparent=True)
-
-    plt.close()
-
     fig = rgblend.tribar()
-    fig.savefig(triangle)
+    fig.savefig(triangle, bbox_inches='tight', transparent=True)
 
     app.run()
