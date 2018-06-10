@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
-import rgblend
+
+from .normalize import normalize3arrays_numpy, normalizeArray2Range
+from .transfer import transfer, xy2rgbd
+from .triangles import triangles
 
 from matplotlib.collections import PolyCollection
 import numpy as np
@@ -15,7 +18,7 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     :return: figure object
     """
     ret = 'axis'
-    tris, xyc = rgblend.triangles(xl, d)
+    tris, xyc = triangles(xl, d)
 
     if ax is None:
         fig = plt.figure(figsize=figsize)
@@ -29,7 +32,7 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
     # Edge of triangles
     edge = xl * np.array([[-0.5, 0], [0.5, 0], [0, np.sqrt(.75)], [-0.5, 0]])
 
-    rgba = np.vstack([rgblend.xy2rgbd(xyc, xl).T, np.ones(len(xyc))]).T
+    rgba = np.vstack([xy2rgbd(xyc, xl).T, np.ones(len(xyc))]).T
     pc.set_facecolors(rgba)
 
     ax.add_collection(pc)
@@ -70,11 +73,11 @@ def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
 
     fig, ax = plt.subplots(2, 3, figsize=figsize)
 
-    sa = [rgblend.normalize.normalizeArray2Range(a.ravel()) for a in [a1,a2,a3]]
+    sa = [normalizeArray2Range(a.ravel()) for a in [a1,a2,a3]]
 
-    na = rgblend.normalize3arrays_numpy(a1,a2,a3)
+    na = normalize3arrays_numpy(a1,a2,a3)
 
-    xy, rgbd = rgblend.transfer(na)
+    xy, rgbd = transfer(na)
 
     img = np.zeros(nm + (3,))
 
@@ -85,7 +88,7 @@ def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     img = plt.imshow(img, aspect=aspect)
 
     plt.sca(ax[0,1])
-    ax[0,1] = rgblend.tribar(ax=ax[0,1])
+    ax[0,1] = tribar(ax=ax[0,1])
 
     ax[0, 1].plot(xy[:, 0], xy[:, 1], 'k.', alpha=0.1)
 
