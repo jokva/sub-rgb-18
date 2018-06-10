@@ -54,16 +54,16 @@ google.charts.load('current', {packages: ['corechart', 'bar']});
                     var answer = JSON.parse(xhttp.responseText);
 
                     var sr = parseFloat(answer.red.value).toFixed(2);
-                    var sg = parseFloat(answer.blue.value).toFixed(2);
-                    var sb = parseFloat(answer.green.value).toFixed(2);
+                    var sg = parseFloat(answer.green.value).toFixed(2);
+                    var sb = parseFloat(answer.blue.value).toFixed(2);
 
                     $('#red').html(sr);
-                    $('#blue').html(sg);
-                    $('#green').html(sb);
+                    $('#green').html(sg);
+                    $('#blue').html(sb);
 
-                    r = (parseInt(sr) - answer.red.min) / (answer.red.max - answer.red.min);
-                    g = (parseInt(sg) - answer.green.min) / (answer.green.max - answer.green.min);;
-                    b = (parseInt(sb) - answer.blue.min) / (answer.blue.max - answer.blue.min);;
+                    r = (answer.red.value - answer.red.min) / (answer.red.max - answer.red.min);
+                    g = (answer.green.value - answer.green.min) / (answer.green.max - answer.green.min);;
+                    b = (answer.blue.value - answer.blue.min) / (answer.blue.max - answer.blue.min);;
 
                     drawAxisTickColors(r, g, b);
                 }

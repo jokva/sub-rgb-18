@@ -24,20 +24,20 @@ def api():
         width = int(request.args.get('width'))
         height = int(request.args.get('height'))
 
-        return jsonify({'red': get_value(x, y, width, height, data1), 'blue': get_value(x, y, width, height, data2), 'green': get_value(x, y, width, height, data3)})
+        return jsonify({'red': get_value(x, y, width, height, data[0]), 'green': get_value(x, y, width, height, data[1]), 'blue': get_value(x, y, width, height, data[2])})
     return jsonify({})
 
 
-def get_value(x, y, width, height, data):
-    mx = round(data.shape[0] * x / width)
-    my = round(data.shape[1] * y / height)
+def get_value(x, y, width, height, value):
+    mx = round(value.shape[0] * x / width)
+    my = round(value.shape[1] * y / height)
 
-    return {'value': data[mx, my], 'min': np.amin(data), 'max': np.amax(data)}
+    return {'value': value[mx, my], 'min': np.amin(value), 'max': np.amax(value)}
 
 
-def create_image(data, name):
-    dim = data.shape[::-1]
-    f = data.flatten()
+def create_image(value, name):
+    dim = value.shape[::-1]
+    f = value.flatten()
     array = ((f - np.min(f)) / (np.max(f) - np.min(f)) * 255).astype(int)
     rgb = [(i,)*3 for i in array]
 
@@ -48,17 +48,26 @@ def create_image(data, name):
     return '/' + name
 
 
+def import_image(name):
+    data = Image.open(name).convert('L')
+    return np.array(data).astype(float)
+
+
+def import_netcdf(name):
+    return xr.open_dataarray(name).values
+
 
 if __name__ == '__main__':
-    data1 = xr.open_dataarray('test_data/horizon1.nc').values
-    data2 = xr.open_dataarray('test_data/horizon2.nc').values
-    data3 = xr.open_dataarray('test_data/horizon3.nc').values
 
-    image1 = create_image(data1, 'static/images/horizon1.png')
-    image2 = create_image(data2, 'static/images/horizon2.png')
-    image3 = create_image(data3, 'static/images/horizon3.png')
+    data = list(map(import_image, ("test_data/img1_lowres.jpg", "test_data/img2_lowres.jpg", "test_data/img3_lowres.jpg")))
+    data = list(map(import_image, ("test_data/img2_1_contrast_saturation_lowres.jpg", "test_data/img2_2_contrast_saturation_lowres.jpg", "test_data/img2_3_contrast_saturation_lowres.jpg")))
+    # data = list(map(import_netcdf, ("test_data/horizon1.nc", "test_data/horizon2.nc", "test_data/horizon3.nc")))
 
-    prop = rgblend.normalize3arrays(data1.ravel(), data2.ravel(), data3.ravel())
+    image1 = create_image(data[0], 'static/images/horizon1.png')
+    image2 = create_image(data[1], 'static/images/horizon2.png')
+    image3 = create_image(data[2], 'static/images/horizon3.png')
+
+    prop = rgblend.normalize3arrays(data[0].ravel(), data[1].ravel(), data[2].ravel())
 
     xy, rgbd = rgblend.transfer(prop)
 
@@ -67,7 +76,7 @@ if __name__ == '__main__':
     rgbi = [tuple(c) for c in rgbi]
 
     imageresult = 'static/images/result.png'
-    img = Image.new('RGB', data1.shape[::-1])
+    img = Image.new('RGB', data[0].shape[::-1])
     img.putdata(rgbi)
     img.save(imageresult)
 
