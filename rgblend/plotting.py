@@ -96,5 +96,6 @@ def rgblend_img(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     plt.sca(ax[1, 2])
     img = plt.imshow(np.reshape(na[2], nm), aspect=aspect, cmap='Greys')
 
+    ax[1,2] = None
 
     return fig
