@@ -6,7 +6,15 @@ import numpy as np
 
 
 
-def tribar(figsize = [5,5], xl = 1, d =10):
+import matplotlib.pyplot as plt
+import rgblend
+
+from matplotlib.collections import PolyCollection
+import numpy as np
+
+
+
+def tribar(figsize = [5,5], xl = 1, d =10, labels = ['Red', 'Green', 'Blue']):
     """
     Return figure object that contains a vectorized triangle
 
@@ -30,6 +38,17 @@ def tribar(figsize = [5,5], xl = 1, d =10):
     pc.set_facecolors(rgba)
 
     ax.add_collection(pc)
+
+    # Hide native yaxis
+    plt.yticks([])
+    
+    # Add labels to corners
+    corners = [(-0.5, 0.0), (0.0, np.sqrt(.75)), (0.5, 0.0)]
+    valigns = ['top', 'bottom', 'top']
+    haligns = ['right', 'center', 'left'] 
+    for corner, va, ha, label in zip(corners, valigns, haligns, labels):
+        x, y = corner
+        plt.text(x, y, label, ha=ha, va=va, fontsize=15)
 
     plt.plot(edge[:, 0], edge[:, 1], 'k-', lw=0.5)
     for loc in ['top', 'bottom', 'left', 'right']:
