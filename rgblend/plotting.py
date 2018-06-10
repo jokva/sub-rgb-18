@@ -60,7 +60,7 @@ def tribar(figsize = [5,5], xl = 1, d =10, ax = None, labels = ['Red', 'Green', 
         return ax
 
 
-def rgblend_img(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
+def rgblend(a1, a2, a3, figsize=[10, 3], aspect = 'auto'):
     nm = np.shape(a1)
 
     # Ideally check dimensions
